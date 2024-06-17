@@ -1,27 +1,41 @@
-Proj3.out: MitriToubbeh_Project3.o LoadBalancer.o Request.o WebServer.o
-	g++ -Wall MitriToubbeh_Project3.o LoadBalancer.o Request.o WebServer.o -o Proj3.out
+# Compiler
+CXX = clang++
 
-MitriToubbeh_Project3.o: MitriToubbeh_Project3.cpp LoadBalancer.h
-	g++ -Wall -c MitriToubbeh_Project3.cpp -o MitriToubbeh_Project3.o
+# Compiler flags
+CXXFLAGS = -Wall -std=c++11
 
-LoadBalancer.o: LoadBalancer.cpp LoadBalancer.h Request.h WebServer.h
-	g++ -Wall -c LoadBalancer.cpp LoadBalancer.h Request.h WebServer.h -o LoadBalancer.o
+# Executable name
+EXEC = MitriToubbeh_Project3
 
-WebServer.o: WebServer.cpp WebServer.h Request.h
-	g++ -Wall -c WebServer.cpp WebServer.h Request.h -o WebServer.o
+# Source files
+SRCS = MitriToubbeh_Project3.cpp LoadBalancer.cpp Request.cpp WebServer.cpp
 
-Request.o: Request.cpp Request.h
-	g++ -Wall -c Request.cpp Request.h -o Request.o
+# Header files
+HEADERS = LoadBalancer.h Request.h WebServer.h
 
+# Object files (replace .cpp with .o)
+OBJS = $(SRCS:.cpp=.o)
+
+# Default rule
+all: $(EXEC)
+
+# Rule to link object files into the executable
+$(EXEC): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Rule to compile source files into object files
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean rule to remove generated files
 clean:
-	rm -rf *.o
-	rm -f *.out
-	rm -f *~ *.h.gch *#
+	rm -f $(OBJS) $(EXEC)
 
-run:
-	./Proj3.out
+# Dependencies
+MitriToubbeh_Project3.o: MitriToubbeh_Project3.cpp LoadBalancer.h
+LoadBalancer.o: LoadBalancer.cpp LoadBalancer.h Request.h WebServer.h
+Request.o: Request.cpp Request.h
+WebServer.o: WebServer.cpp WebServer.h Request.h
 
-all:
-	make clean
-	make
-	make run
+# Phony targets
+.PHONY: all clean
