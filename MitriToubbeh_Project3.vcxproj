@@ -127,7 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LoadBalancer.cpp" />
     <ClCompile Include="MitriToubbeh_Project3.cpp" />
+    <ClCompile Include="Request.cpp" />
+    <ClCompile Include="WebServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoadBalancer.h" />
